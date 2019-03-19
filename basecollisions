@@ -1,0 +1,138 @@
+int sum_collision = 0;
+int sol = 500;
+int saut = 20;
+int speed = 10;
+  
+boolean saut1;
+
+// Joueur 1
+int p1width = 30, p1height = 30, p1x = 10, p1y = sol - p1width;
+// Joueur 2
+int p2width = 30, p2height = 30, p2x = 50, p2y = sol - p2width;
+
+void setup(){
+  size(800, 600);
+}
+
+void draw(){
+  background(255);
+  frameRate(120);
+  
+  // Plateforme
+  fill(0);
+  noStroke();
+  rect(0, sol, 800, 100);
+  
+  // Joueur 1, bleu
+  fill(0, 0, 255);
+  noStroke();
+  rect(p1x, p1y, p1width, p1height);
+  
+  // Joueur 2, vert
+  fill(0, 255, 0);
+  noStroke();
+  rect(p2x, p2y, p2width, p2height);
+  
+}
+
+void keyPressed(){
+// Joueur 1 //
+  // LEFT
+  if(key == 'q' && verifCollisionLeft1() == 0) p1x--;
+  // RIGHT
+  if(key == 'd' && verifCollisionRight1() == 0) p1x++;
+  // UP && 
+  if(key == 'z' && verifCollisionUp1() == 0) p1y--;
+  // DOWN
+  if(key == 's' && verifCollisionDown1() == 0) p1y++;
+  
+// Joueur 2 //
+  // LEFT
+  if(key == 'k' && verifCollisionLeft2() == 0) p2x--;
+  // RIGHT
+  if(key == 'm' && verifCollisionRight2() == 0) p2x++;
+  // UP
+  if(key == 'o' && verifCollisionUp2() == 0) p2y--;
+  // DOWN
+  if(key == 'l' && verifCollisionDown2() == 0) p2y++;
+}
+
+int verifCollisionLeft1(){
+  sum_collision = 0;
+  for(int y1 = p1y; y1 < p1y + p1height; y1++){
+    for(int y2 = p2y; y2 < p2y + p2height; y2++){
+      if(p1x == p2x+p2width && y1 == y2) sum_collision++;
+    }
+  }
+  return sum_collision;
+}
+
+int verifCollisionRight1(){
+  sum_collision = 0;
+  for(int y1 = p1y; y1 < p1y + p1height; y1++){
+    for(int y2 = p2y; y2 < p2y + p2height; y2++){
+      if(p1x+p1width == p2x && y1 == y2) sum_collision++;
+    }
+  }
+  return sum_collision;
+}
+
+int verifCollisionUp1(){
+  sum_collision = 0;
+  for(int x1 = p1x; x1 < p1x + p1width; x1++){
+    for(int x2 = p2x; x2 < p2x + p2width; x2++){
+      if(p1y == p2y+p2height && x1 == x2) sum_collision++;
+    }
+  }
+  return sum_collision;
+}
+
+int verifCollisionDown1(){
+  sum_collision = 0;
+  for(int x1 = p1x; x1 < p1x + p1width; x1++){
+    for(int x2 = p2x; x2 < p2x + p2width; x2++){
+      if(p1y+p1height == p2y && x1 == x2) sum_collision++;
+    }
+  }
+  return sum_collision;
+}
+
+int verifCollisionLeft2(){
+  sum_collision = 0;
+  for(int y2 = p2y; y2 < p2y + p2height; y2++){
+    for(int y1 = p1y; y1 < p1y + p1height; y1++){
+      if(p2x == p1x+p1width && y1 == y2) sum_collision++;
+    }
+  }
+  return sum_collision;
+}
+
+int verifCollisionRight2(){
+  sum_collision = 0;
+  for(int y2 = p2y; y2 < p2y + p2height; y2++){
+    for(int y1 = p1y; y1 < p1y + p1height; y1++){
+      if(p2x+p2width == p1x && y1 == y2) sum_collision++;
+    }
+  }
+  return sum_collision;
+}
+
+int verifCollisionUp2(){
+  sum_collision = 0;
+  for(int x2 = p2x; x2 < p2x + p2width; x2++){
+    for(int x1 = p1x; x1 < p1x + p1width; x1++){
+      if(p2y == p1y+p1height && x1 == x2) sum_collision++;
+    }
+  }
+  return sum_collision;
+}
+
+int verifCollisionDown2(){
+  sum_collision = 0;
+  for(int x2 = p2x; x2 < p2x + p2width; x2++){
+    for(int x1 = p1x; x1 < p1x + p1width; x1++){
+      if(p2y+p2height == p1y && x1 == x2) sum_collision++;
+    }
+  }
+  return sum_collision;
+}
