@@ -1,0 +1,63 @@
+boolean up1 = false;
+int sum_collision = 0;
+int sol = 500;
+int initspeed = 15;
+int speed = initspeed;
+
+// Joueur 1
+int p1width = 30, p1height = 30, p1x = 10, p1y = sol - p1width;
+// Joueur 2
+int p2width = 30, p2height = 30, p2x = 10, p2y = sol - p2width - 60;
+
+void setup(){
+  size(800, 600);
+}
+
+void draw(){
+  background(255);
+  frameRate(120);
+  
+  // Plateforme
+  fill(0);
+  noStroke();
+  rect(0, sol, 800, 100);
+  
+  // Joueur 1, bleu
+  fill(0, 0, 255);
+  noStroke();
+  rect(p1x, p1y, p1width, p1height);
+  
+  // Joueur 2, vert
+  fill(0, 255, 0);
+  noStroke();
+  rect(p2x, p2y, p2width, p2height);
+  
+  gravite();
+}
+
+void keyPressed(){
+  if(key == 'z' && verifCollisionUp1() == 0) up1 = true;
+}
+
+void gravite(){
+  if(up1 && verifCollisionUp1() == 0){
+    p1y -= speed;
+    if(p1y >= sol - p1height){
+      p1y = sol - p1height;
+      speed = initspeed;
+      up1 = false;
+    } else {
+      speed--;
+    }
+  }
+}
+
+int verifCollisionUp1(){
+  sum_collision = 0;
+  for(int x1 = p1x; x1 < p1x + p1width; x1++){
+    for(int x2 = p2x; x2 < p2x + p2width; x2++){
+      if(p1y == p2y+p2height && x1 == x2) sum_collision++;
+    }
+  }
+  return sum_collision;
+}
