@@ -1,8 +1,9 @@
 int sum_collision = 0;
 int sol = 500;
 int saut = 20;
+int initspeed = 20;
 int speed = 10;
-  
+boolean keys[];
 boolean saut1;
 
 // Joueur 1
@@ -12,11 +13,14 @@ int p2width = 30, p2height = 30, p2x = 50, p2y = sol - p2width;
 
 void setup(){
   size(800, 600);
+  keys = new boolean[8];
 }
 
 void draw(){
   background(255);
   frameRate(120);
+  
+
   
   // Plateforme
   fill(0);
@@ -33,28 +37,75 @@ void draw(){
   noStroke();
   rect(p2x, p2y, p2width, p2height);
   
+  // Déplacement
+  deplacement();
+  
+  // Sol
+  sol();
 }
 
 void keyPressed(){
 // Joueur 1 //
   // LEFT
-  if(key == 'q' && verifCollisionLeft1() == 0) p1x--;
+  if(key == 'q') keys[0] = true;
   // RIGHT
-  if(key == 'd' && verifCollisionRight1() == 0) p1x++;
-  // UP && 
-  if(key == 'z' && verifCollisionUp1() == 0) p1y--;
+  if(key == 'd') keys[1] = true;
+  // UP
+  if(key == 'z') keys[2] = true;
   // DOWN
-  if(key == 's' && verifCollisionDown1() == 0) p1y++;
+  if(key == 's') keys[3] = true;
   
 // Joueur 2 //
   // LEFT
-  if(key == 'k' && verifCollisionLeft2() == 0) p2x--;
+  if(key == 'k') keys[4] = true;
   // RIGHT
-  if(key == 'm' && verifCollisionRight2() == 0) p2x++;
+  if(key == 'm') keys[5] = true;
   // UP
-  if(key == 'o' && verifCollisionUp2() == 0) p2y--;
+  if(key == 'o') keys[6] = true;
   // DOWN
-  if(key == 'l' && verifCollisionDown2() == 0) p2y++;
+  if(key == 'l') keys[7] = true;
+}
+
+void keyReleased(){
+// Joueur 1 //
+  // LEFT
+  if(key == 'q') keys[0] = false;
+  // RIGHT
+  if(key == 'd') keys[1] = false;
+  // UP
+  if(key == 'z') keys[2] = false;
+  // DOWN
+  if(key == 's') keys[3] = false;
+  
+// Joueur 2 //
+  // LEFT
+  if(key == 'k') keys[4] = false;
+  // RIGHT
+  if(key == 'm') keys[5] = false;
+  // UP
+  if(key == 'o') keys[6] = false;
+  // DOWN
+  if(key == 'l') keys[7] = false; 
+}
+
+void deplacement() { 
+ if (keys[0] && verifCollisionLeft1() == 0) p1x--; 
+ if (keys[1] && verifCollisionRight1() == 0) p1x++; 
+ if (keys[2] && verifCollisionUp1() == 0) p1y--;
+ if (keys[3] && verifCollisionDown1() == 0) p1y++;
+ if (keys[4] && verifCollisionLeft2() == 0) p2x--;
+ if (keys[5] && verifCollisionRight2() == 0) p2x++;
+ if (keys[6] && verifCollisionUp2() == 0) p2y--;
+ if (keys[7] && verifCollisionDown2() == 0) p2y++; 
+}
+
+void sol(){
+  if(p1y + p1height >= sol){
+    p1y = sol - p1height;
+  }
+  if(p2y + p2height >= sol){
+    p2y = sol - p2height;
+  }
 }
 
 int verifCollisionLeft1(){
