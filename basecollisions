@@ -68,23 +68,15 @@ void keyPressed(){
 
 void keyReleased(){
 // Joueur 1 //
-  // LEFT
   if(key == 'q') keys[0] = false;
-  // RIGHT
   if(key == 'd') keys[1] = false;
-  // UP
   if(key == 'z') keys[2] = false;
-  // DOWN
   if(key == 's') keys[3] = false;
   
 // Joueur 2 //
-  // LEFT
   if(key == 'k') keys[4] = false;
-  // RIGHT
   if(key == 'm') keys[5] = false;
-  // UP
   if(key == 'o') keys[6] = false;
-  // DOWN
   if(key == 'l') keys[7] = false; 
 }
 
